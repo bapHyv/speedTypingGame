@@ -1,6 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import gameContext from '../context/gameContext';
 
 const Main = () => {
+	const [state, dispatch] = useContext(gameContext);
+
+	const [time, setTime] = useState(null);
+
+	useEffect(() => {
+		dispatch({
+			type: 'SET_TIMER',
+			payload: time
+		});
+	}, [time]);
+
+	const handleTimeChange = event => {
+		const { value } = event.target;
+		setTime(parseInt(value));
+    };
+
+    const timerFunction = () => {
+        if (time) {
+			const timeInterval = setInterval(() => {
+				setTime(prevTime => {
+					return prevTime - 1;
+				});
+			}, 1000);
+		setTimeout(() => {
+            clearInterval(timeInterval)
+        }, time * 1000)
+		}
+    }
+
+	const handleStart = () => {
+		timerFunction()
+	};
+
+	console.log(time);
+	console.log('state', state);
 	return (
 		<div>
 			<h1>SPEED TYPING GAME</h1>
@@ -22,8 +58,9 @@ const Main = () => {
 				</div>
 				<div>
 					<h2>Time:</h2>
-					<select name="" id="">
+					<select name="time" onChange={handleTimeChange}>
 						<option value="">--Choose a time--</option>
+						<option value="5">5</option>
 						<option value="15">15</option>
 						<option value="30">30</option>
 						<option value="45">45</option>
@@ -35,8 +72,9 @@ const Main = () => {
 			<div>
 				<input type="text" name="" id="" />
 			</div>
-			<button>Start</button>
-			<div>
+			<button onClick={handleStart}>Start</button>
+			{time !== null && time !== 0 && <div>Time left: {time}</div>}
+			<div className="currentScore">
 				<span>Your current score:</span>
 			</div>
 		</div>
