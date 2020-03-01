@@ -1,14 +1,19 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-    return (
-        <div>
-            <ul>
-                <li>Speed typing game</li>
-                <li>My score</li>
-            </ul>
-        </div>
-    )
-}
+	return (
+		<div>
+			<ul>
+				<Link to="/">
+					<li>Speed typing game</li>
+				</Link>
+				<Link to="/score">
+					<li>My score</li>
+				</Link>
+			</ul>
+		</div>
+	);
+};
 
-export default Navbar
+export default Navbar;
