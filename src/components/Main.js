@@ -1,37 +1,35 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useContext } from 'react';
 import gameContext from '../context/gameContext';
-import Options from './Options'
+import Options from './Options';
 import TitleAndDescription from './TitleAndDescription';
 
 const Main = () => {
-    const [state, dispatch] = useContext(gameContext);
-    const {time} = state
-
-    const timerFunction = () => {
-        if (time) {
+	const [state, dispatch] = useContext(gameContext);
+    const { time, wordsArray, randomNumber } = state;
+    
+	const timerFunction = () => {
+		if (time) {
 			const timeInterval = setInterval(() => {
 				dispatch({
-                    type: 'TIME_RUNNING',
-                    payload: 1
-                });
+					type: 'TIME_RUNNING',
+					payload: 1
+				});
 			}, 1000);
-		setTimeout(() => {
-            clearInterval(timeInterval)
-        }, time * 1000)
+			setTimeout(() => {
+				clearInterval(timeInterval);
+			}, time * 1000);
 		}
-    }
-
-	const handleStart = () => {
-		timerFunction()
 	};
 
-	console.log(time);
-	console.log('state', state);
+	const handleStart = async () => {
+		timerFunction();
+	};
+
 	return (
 		<div>
 			<TitleAndDescription />
-			<h3>The word:</h3>
-            <Options />
+			<h3>The word: </h3>
+			<Options />
 			<div>
 				<input type="text" name="" id="" />
 			</div>

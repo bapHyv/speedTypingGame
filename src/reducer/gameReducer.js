@@ -1,6 +1,9 @@
 export const initialGameState = {
     time: null,
-    difficulty: null
+    difficulty: null,
+    wordsArray: [],
+    wordsArrayLength: null,
+    randomNumber: null
 }
 
 export const gameReducer = (state, action) => {
@@ -14,6 +17,21 @@ export const gameReducer = (state, action) => {
             return {
                 ...state,
                 difficulty: action.payload
+            }
+        case 'SET_WORDS_ARRAY':
+            return {
+                ...state,
+                wordsArray: action.payload
+            }
+        case 'SET_WORDS_ARRAY_LENGTH':
+            return {
+                ...state,
+                wordsArrayLength: action.payload
+            }
+        case 'SET_RANDOM_NUMBER':
+            return {
+                ...state,
+                randomNumber: action.payload
             }
         case 'TIME_RUNNING':
             return {
