@@ -1,12 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import gameContext from '../context/gameContext';
 import Options from './Options';
 import TitleAndDescription from './TitleAndDescription';
 
 const Main = () => {
 	const [state, dispatch] = useContext(gameContext);
-    const { time, wordsArray, randomNumber } = state;
-    
+	const {
+		time,
+		wordsArray,
+		wordsArrayLength,
+		randomNumber,
+		started,
+		currentScore
+	} = state;
+
+	const [userAnswer, setUserAnswer] = useState('');
+
+	const randomNumberGenerator = number => {
+		return Math.round(Math.random() * number);
+	};
+
 	const timerFunction = () => {
 		if (time) {
 			const timeInterval = setInterval(() => {
@@ -17,26 +30,65 @@ const Main = () => {
 			}, 1000);
 			setTimeout(() => {
 				clearInterval(timeInterval);
+				dispatch({
+					type: 'SET_START',
+					payload: false
+				});
 			}, time * 1000);
 		}
 	};
 
-	const handleStart = async () => {
+	const handleStart = () => {
+		dispatch({
+			type: 'RESET_SCORE'
+		});
+		dispatch({
+			type: 'SET_START',
+			payload: true
+		});
 		timerFunction();
 	};
+
+	const handleUserAnswer = event => {
+		const { value } = event.target;
+		setUserAnswer(value);
+	};
+
+	const handleUserAnswerValidation = event => {
+		if (event.key === 'Enter') {
+			if (wordsArray[randomNumber] === userAnswer) {
+				dispatch({
+					type: 'UPDATE_CURRENT_SCORE'
+				});
+				dispatch({
+					type: 'SET_RANDOM_NUMBER',
+					payload: randomNumberGenerator(wordsArrayLength)
+				});
+				event.target.value = ''
+			}
+		}
+	};
+
+	console.log(userAnswer);
 
 	return (
 		<div>
 			<TitleAndDescription />
-			<h3>The word: </h3>
+			<h3>{started && <div>The words: {wordsArray[randomNumber]}</div>}</h3>
 			<Options />
 			<div>
-				<input type="text" name="" id="" />
+				<input
+					type="text"
+					name="userAnswer"
+					id=""
+					onChange={handleUserAnswer}
+					onKeyPress={handleUserAnswerValidation}
+				/>
 			</div>
-			<button onClick={handleStart}>Start</button>
-			{time !== null && time !== 0 && <div>Time left: {time}</div>}
+			{!started && <button onClick={handleStart}>Start</button>}
+			{started && <div>Time left: {time}</div>}
 			<div className="currentScore">
-				<span>Your current score:</span>
+				{started && <span>Your current score: {currentScore}</span>}
 			</div>
 		</div>
 	);

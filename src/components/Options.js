@@ -61,7 +61,6 @@ const Options = () => {
 	};
 
 	console.log(state);
-	console.log(difficultyLocalState);
 
 	return (
 		<div style={{ display: 'flex', justifyContent: 'space-around' }}>
