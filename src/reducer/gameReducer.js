@@ -1,5 +1,6 @@
 export const initialGameState = {
-    timer: 0
+    timer: 0,
+    difficulty: ''
 }
 
 export const gameReducer = (state, action) => {
@@ -8,6 +9,11 @@ export const gameReducer = (state, action) => {
             return {
                 ...state,
                 timer: action.payload
+            }
+        case 'SET_DIFFICULTY':
+            return {
+                ...state,
+                difficulty: action.payload
             }
         default:
             return state

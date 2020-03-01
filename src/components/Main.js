@@ -4,19 +4,29 @@ import gameContext from '../context/gameContext';
 const Main = () => {
 	const [state, dispatch] = useContext(gameContext);
 
-	const [time, setTime] = useState(null);
+    const [time, setTime] = useState(null);
+    const [difficulty, setDifficulty] = useState(null)
 
 	useEffect(() => {
 		dispatch({
 			type: 'SET_TIMER',
 			payload: time
-		});
-	}, [time]);
+        });
+        dispatch({
+            type: 'SET_DIFFICULTY',
+            payload: difficulty
+        })
+	}, [time, difficulty]);
 
 	const handleTimeChange = event => {
 		const { value } = event.target;
 		setTime(parseInt(value));
     };
+
+    const handleDifficultyChange = event => {
+        const {value} = event.target
+        setDifficulty(value)
+    }
 
     const timerFunction = () => {
         if (time) {
@@ -49,7 +59,7 @@ const Main = () => {
 			<div style={{ display: 'flex', justifyContent: 'space-around' }}>
 				<div>
 					<h2>Difficulties:</h2>
-					<select name="" id="">
+					<select name="difficulty" id="" onChange={handleDifficultyChange} >
 						<option value="">--Choose a difficulty--</option>
 						<option value="easy">Easy</option>
 						<option value="medium">Medium</option>
