@@ -1,0 +1,32 @@
+/* pink: #ff21fb blue: #21ebff  */
+
+h2 {
+    color: #fff;
+    filter: none;
+    animation: animateOptions 3s linear infinite;
+    text-shadow: none
+}
+
+@keyframes animateOptions {
+    0%, 100% {
+        color: white;
+        filter: none;
+        text-shadow: none
+    }
+    30%, 70% {
+        color: white;
+        filter: none;
+        text-shadow: 0 0 10px #21ebff
+    }
+}
+
+.choices {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.options {
+	display: flex;
+	flex-direction: row;
+}

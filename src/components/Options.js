@@ -6,6 +6,8 @@ import axios from 'axios';
 
 import { randomNumberGenerator } from '../externalFunctions/randomNumberGenerator';
 
+import '../css/option.css'
+
 const Options = () => {
 	const [state, dispatch] = useContext(gameContext);
 	const { wordsArray, selectDifficultyValue, selectTimerValue, time } = state;

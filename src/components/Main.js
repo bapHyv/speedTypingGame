@@ -4,6 +4,7 @@ import gameContext from '../context/gameContext';
 
 import Options from './Options';
 import Description from './Description';
+import Title from './Title';
 
 import { randomNumberGenerator } from '../externalFunctions/randomNumberGenerator';
 
@@ -21,6 +22,7 @@ const Main = () => {
 	} = state;
 
 	const [userAnswer, setUserAnswer] = useState('');
+	const [inputCss, setInputCss] = useState('inputAnswer')
 
 	const inputRef = useRef(null);
 
@@ -40,6 +42,8 @@ const Main = () => {
 				dispatch({
 					type: 'RESET_INITIAL_STATE'
 				});
+				// SET THE INPUT CSS TO inputAnswer SO WHEN THE USER RESTART A GAME IT WILL NOT APPEAR GREEN
+				setInputCss('inputAnswer')
 			}, time * 1000);
 		}
 	};
@@ -75,16 +79,18 @@ const Main = () => {
 					type: 'SET_RANDOM_NUMBER',
 					payload: randomNumberGenerator(wordsArrayLength)
 				});
+				setInputCss('inputRightAnswer')
 				setUserAnswer('');
+			} else if (wordsArray[randomNumber] !== userAnswer) {
+				setInputCss('inputWrongAnswer')
 			}
 		}
 	};
 
 	return (
 		<div>
-			<h1 className="neon-title" data-text="[SPEED TYPING GAME]">
-				[SPEED TYPING GAME]
-			</h1>
+			{/* <h1 className="neon-title">[SPEED TYPING GAME]</h1> */}
+			<Title />
 			<Options />
 			<h3>
 				{started ? (
@@ -95,6 +101,7 @@ const Main = () => {
 			</h3>
 			<div>
 				<input
+					className={!started ? 'inputAnswer' : inputCss}
 					type="text"
 					name="userAnswer"
 					id=""
@@ -113,7 +120,11 @@ const Main = () => {
 							: 'startButtonDisabled'
 					}
 					onClick={handleStart}
-					disabled={selectTimerValue === "" || selectDifficultyValue === "" ? true : false}
+					disabled={
+						selectTimerValue === '' || selectDifficultyValue === ''
+							? true
+							: false
+					}
 				>
 					Start
 				</button>
