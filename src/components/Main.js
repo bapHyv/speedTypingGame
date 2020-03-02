@@ -3,7 +3,7 @@ import React, { useContext, useState, useRef } from 'react';
 import gameContext from '../context/gameContext';
 
 import Options from './Options';
-import TitleAndDescription from './TitleAndDescription';
+import Description from './Description';
 
 import { randomNumberGenerator } from '../externalFunctions/randomNumberGenerator';
 
@@ -16,7 +16,8 @@ const Main = () => {
 		randomNumber,
 		started,
 		currentScore,
-		selectTimerValue
+		selectTimerValue,
+		selectDifficultyValue
 	} = state;
 
 	const [userAnswer, setUserAnswer] = useState('');
@@ -81,9 +82,17 @@ const Main = () => {
 
 	return (
 		<div>
-			<TitleAndDescription />
-			<h3>{started && <div>The words: {wordsArray[randomNumber]}</div>}</h3>
+			<h1 className="neon-title" data-text="[SPEED TYPING GAME]">
+				[SPEED TYPING GAME]
+			</h1>
 			<Options />
+			<h3>
+				{started ? (
+					<div>{wordsArray[randomNumber]}</div>
+				) : (
+					<div className="wordPlaceholder"></div>
+				)}
+			</h3>
 			<div>
 				<input
 					type="text"
@@ -98,16 +107,22 @@ const Main = () => {
 			</div>
 			{!started && (
 				<button
+					className={
+						selectTimerValue && selectDifficultyValue
+							? 'startButton'
+							: 'startButtonDisabled'
+					}
 					onClick={handleStart}
-					disabled={selectTimerValue === '' ? true : false}
+					disabled={selectTimerValue === "" || selectDifficultyValue === "" ? true : false}
 				>
 					Start
 				</button>
 			)}
-			{started && <div>Time left: {time}</div>}
+			{started && <h4 className="timeLeftPlaceholder">Time left: {time}</h4>}
 			<div className="currentScore">
 				<span>Your current score: {currentScore}</span>
 			</div>
+			<Description />
 		</div>
 	);
 };

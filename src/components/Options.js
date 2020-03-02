@@ -62,34 +62,38 @@ const Options = () => {
 	};
 
 	return (
-		<div style={{ display: 'flex', justifyContent: 'space-around' }}>
-			<div>
+		<div className="choices">
+			<div className="options">
 				<h2>Difficulties:</h2>
-				<select
-					name="difficulty"
-					onChange={handleDifficultyLocalStateChange}
-					value={selectDifficultyValue}
-				>
-					<option value="">--Choose a difficulty--</option>
-					<option value="easy">Easy</option>
-					<option value="medium">Medium</option>
-					<option value="hard">Hard</option>
-				</select>
+				<div >
+					<select
+						name="difficulty"
+						onChange={handleDifficultyLocalStateChange}
+						value={selectDifficultyValue}
+					>
+						<option value="">--Choose a difficulty--</option>
+						<option value="easy">Easy</option>
+						<option value="medium">Medium</option>
+						<option value="hard">Hard</option>
+					</select>
+				</div>
 			</div>
-			<div>
+			<div className="options">
 				<h2>Time:</h2>
-				<select
-					name="time"
-					onChange={handleTimerChange}
-					value={selectTimerValue}
-				>
-					<option value="">--Choose a time--</option>
-					<option value="5">5</option>
-					<option value="15">15</option>
-					<option value="30">30</option>
-					<option value="45">45</option>
-					<option value="60">60</option>
-				</select>
+				<div>
+					<select
+						name="time"
+						onChange={handleTimerChange}
+						value={selectTimerValue}
+					>
+						<option value="">--Choose a time--</option>
+						<option value="5">5 secondes</option>
+						<option value="15">15 secondes</option>
+						<option value="30">30 secondes</option>
+						<option value="45">45 secondes</option>
+						<option value="60">60 secondes</option>
+					</select>
+				</div>
 			</div>
 		</div>
 	);
