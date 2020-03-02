@@ -74,7 +74,7 @@ h1 span:nth-child(19) {
     }
     25%, 75% {
 		color: black;
-		filter: blur(2px);
+		filter: blur(1px);
         text-shadow: 0 0 10px #ff21fb
 	}
 }

@@ -1,4 +1,5 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
+import { Howl, Howler } from 'howler';
 
 import gameContext from '../context/gameContext';
 
@@ -7,6 +8,19 @@ import Description from './Description';
 import Title from './Title';
 
 import { randomNumberGenerator } from '../externalFunctions/randomNumberGenerator';
+
+import Right from '../SoundEffects/right.mp3';
+import Wrong from '../SoundEffects/wrong.mp3';
+
+const rightAnswerAudioClip = {
+	sound: Right,
+	label: 'rightAnswer'
+};
+
+const wrongAnswerAudioClip = {
+	sound: Wrong,
+	label: 'wrongAnswer'
+};
 
 const Main = () => {
 	const [state, dispatch] = useContext(gameContext);
@@ -22,9 +36,20 @@ const Main = () => {
 	} = state;
 
 	const [userAnswer, setUserAnswer] = useState('');
-	const [inputCss, setInputCss] = useState('inputAnswer')
+	const [inputCss, setInputCss] = useState('inputAnswer');
 
 	const inputRef = useRef(null);
+
+	useEffect(() => {
+		Howler.volume(1.0);
+	}, []);
+
+	const soundPlay = src => {
+		const sound = new Howl({
+			src
+		});
+		sound.play();
+	};
 
 	const timerFunction = () => {
 		if (time) {
@@ -43,7 +68,7 @@ const Main = () => {
 					type: 'RESET_INITIAL_STATE'
 				});
 				// SET THE INPUT CSS TO inputAnswer SO WHEN THE USER RESTART A GAME IT WILL NOT APPEAR GREEN
-				setInputCss('inputAnswer')
+				setInputCss('inputAnswer');
 			}, time * 1000);
 		}
 	};
@@ -79,17 +104,18 @@ const Main = () => {
 					type: 'SET_RANDOM_NUMBER',
 					payload: randomNumberGenerator(wordsArrayLength)
 				});
-				setInputCss('inputRightAnswer')
+				setInputCss('inputRightAnswer');
+				soundPlay(rightAnswerAudioClip.sound);
 				setUserAnswer('');
 			} else if (wordsArray[randomNumber] !== userAnswer) {
-				setInputCss('inputWrongAnswer')
+				setInputCss('inputWrongAnswer');
+				soundPlay(wrongAnswerAudioClip.sound);
 			}
 		}
 	};
 
 	return (
 		<div>
-			{/* <h1 className="neon-title">[SPEED TYPING GAME]</h1> */}
 			<Title />
 			<Options />
 			<h3>
