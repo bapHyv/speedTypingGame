@@ -1,7 +1,11 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { useContext, useState, useRef } from 'react';
+
 import gameContext from '../context/gameContext';
+
 import Options from './Options';
 import TitleAndDescription from './TitleAndDescription';
+
+import { randomNumberGenerator } from '../externalFunctions/randomNumberGenerator';
 
 const Main = () => {
 	const [state, dispatch] = useContext(gameContext);
@@ -17,12 +21,7 @@ const Main = () => {
 
 	const [userAnswer, setUserAnswer] = useState('');
 
-	
-	const inputRef = useRef(null)
-
-	const randomNumberGenerator = number => {
-		return Math.round(Math.random() * number);
-	};
+	const inputRef = useRef(null);
 
 	const timerFunction = () => {
 		if (time) {
@@ -54,11 +53,10 @@ const Main = () => {
 			payload: true
 		});
 		timerFunction();
-		setUserAnswer('');
 		// ENABLE MANUALY THE INPUT ELEMENT TO ALLOW THE FOCUS WHICH TAKES PLACE NEXT LINE
-		inputRef.current.disabled = false
+		inputRef.current.disabled = false;
 		// FOCUS ON THE INPUT ELEMENT WHEN THE BUTTON START IS PRESSED SO THE USER CAN TYPE RIGHT AWAY WHEN THE GAME BEGIN
-		inputRef.current.focus()
+		inputRef.current.focus();
 	};
 
 	const handleUserAnswer = event => {
@@ -86,26 +84,26 @@ const Main = () => {
 			<TitleAndDescription />
 			<h3>{started && <div>The words: {wordsArray[randomNumber]}</div>}</h3>
 			<Options />
-				<div>
-					<input
-						type="text"
-						name="userAnswer"
-						id=""
-						onChange={handleUserAnswer}
-						onKeyPress={handleUserAnswerValidation}
-						disabled={!started}
-						value={userAnswer}
-						ref={inputRef}
-					/>
-				</div>
-				{!started && (
-					<button
-						onClick={handleStart}
-						disabled={selectTimerValue === '' ? true : false}
-					>
-						Start
-					</button>
-				)}
+			<div>
+				<input
+					type="text"
+					name="userAnswer"
+					id=""
+					onChange={handleUserAnswer}
+					onKeyPress={handleUserAnswerValidation}
+					disabled={!started}
+					value={userAnswer}
+					ref={inputRef}
+				/>
+			</div>
+			{!started && (
+				<button
+					onClick={handleStart}
+					disabled={selectTimerValue === '' ? true : false}
+				>
+					Start
+				</button>
+			)}
 			{started && <div>Time left: {time}</div>}
 			<div className="currentScore">
 				<span>Your current score: {currentScore}</span>

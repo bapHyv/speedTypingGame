@@ -1,15 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
+
 import gameContext from '../context/gameContext';
+
 import axios from 'axios';
+
+import { randomNumberGenerator } from '../externalFunctions/randomNumberGenerator';
 
 const Options = () => {
 	const [state, dispatch] = useContext(gameContext);
 	const { wordsArray, selectDifficultyValue, selectTimerValue, time } = state;
 
 	const [timer, setTime] = useState(null);
-    const [difficultyLocalState, setDifficulty] = useState(null);
-    
-    useEffect(() => {
+	const [difficultyLocalState, setDifficulty] = useState(null);
+
+	useEffect(() => {
 		dispatch({
 			type: 'SET_TIMER',
 			payload: timer
@@ -28,13 +32,8 @@ const Options = () => {
 				type: 'SET_RANDOM_NUMBER',
 				payload: randomNumberGenerator(wordsArray.length)
 			});
-        }
-        
+		}
 	}, [timer, difficultyLocalState, wordsArray.length]);
-
-	const randomNumberGenerator = number => {
-		return Math.round(Math.random() * number);
-	};
 
 	const getData = async () => {
 		const words = await axios.get(`/${difficultyLocalState}Words`);
@@ -46,11 +45,11 @@ const Options = () => {
 
 	const handleTimerChange = event => {
 		const { value } = event.target;
-        setTime(parseInt(value));
-        dispatch({
-            type: 'SET_SELECT_TIMER_VALUE',
-            payload: value
-        })
+		setTime(parseInt(value));
+		dispatch({
+			type: 'SET_SELECT_TIMER_VALUE',
+			payload: value
+		});
 	};
 
 	const handleDifficultyLocalStateChange = async event => {
