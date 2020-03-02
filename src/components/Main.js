@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import gameContext from '../context/gameContext';
 import Options from './Options';
 import TitleAndDescription from './TitleAndDescription';
@@ -11,10 +11,25 @@ const Main = () => {
 		wordsArrayLength,
 		randomNumber,
 		started,
-		currentScore
+		currentScore,
+		selectTimerValue
 	} = state;
 
 	const [userAnswer, setUserAnswer] = useState('');
+
+	useEffect(() => {
+		if (time === 0) {
+			setUserAnswer('');
+			dispatch({
+				type: 'SET_START',
+				payload: false
+			});
+			// CLEAN UP THE INITIAL STATE TO AVOID BUG IN THE DIFFICULTIES AND TIME CHOICE
+			dispatch({
+				type: 'RESET_INITIAL_STATE'
+			});
+		}
+	}, [time]);
 
 	const randomNumberGenerator = number => {
 		return Math.round(Math.random() * number);
@@ -30,10 +45,6 @@ const Main = () => {
 			}, 1000);
 			setTimeout(() => {
 				clearInterval(timeInterval);
-				dispatch({
-					type: 'SET_START',
-					payload: false
-				});
 			}, time * 1000);
 		}
 	};
@@ -47,6 +58,7 @@ const Main = () => {
 			payload: true
 		});
 		timerFunction();
+		setUserAnswer('');
 	};
 
 	const handleUserAnswer = event => {
@@ -64,31 +76,38 @@ const Main = () => {
 					type: 'SET_RANDOM_NUMBER',
 					payload: randomNumberGenerator(wordsArrayLength)
 				});
-				event.target.value = ''
+				setUserAnswer('');
 			}
 		}
 	};
-
-	console.log(userAnswer);
 
 	return (
 		<div>
 			<TitleAndDescription />
 			<h3>{started && <div>The words: {wordsArray[randomNumber]}</div>}</h3>
 			<Options />
-			<div>
-				<input
-					type="text"
-					name="userAnswer"
-					id=""
-					onChange={handleUserAnswer}
-					onKeyPress={handleUserAnswerValidation}
-				/>
-			</div>
-			{!started && <button onClick={handleStart}>Start</button>}
+				<div>
+					<input
+						type="text"
+						name="userAnswer"
+						id=""
+						onChange={handleUserAnswer}
+						onKeyPress={handleUserAnswerValidation}
+						disabled={!started}
+						value={userAnswer}
+					/>
+				</div>
+				{!started && (
+					<button
+						onClick={handleStart}
+						disabled={selectTimerValue === '' ? true : false}
+					>
+						Start
+					</button>
+				)}
 			{started && <div>Time left: {time}</div>}
 			<div className="currentScore">
-				{started && <span>Your current score: {currentScore}</span>}
+				<span>Your current score: {currentScore}</span>
 			</div>
 		</div>
 	);
