@@ -20,10 +20,6 @@ const Main = () => {
 	useEffect(() => {
 		if (time === 0) {
 			setUserAnswer('');
-			dispatch({
-				type: 'SET_START',
-				payload: false
-			});
 			// CLEAN UP THE INITIAL STATE TO AVOID BUG IN THE DIFFICULTIES AND TIME CHOICE
 			dispatch({
 				type: 'RESET_INITIAL_STATE'
