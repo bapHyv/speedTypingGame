@@ -71,7 +71,9 @@ export const gameReducer = (state, action) => {
 			return {
 				...state,
 				time: null,
-				difficulty: '',
+				difficulty: null,
+				wordsArray: [],
+				wordsArrayLength: null,
 				randomNumber: null,
 				started: false,
 				selectDifficultyValue: '',

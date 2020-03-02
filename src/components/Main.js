@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import gameContext from '../context/gameContext';
 import Options from './Options';
 import TitleAndDescription from './TitleAndDescription';
@@ -17,15 +17,8 @@ const Main = () => {
 
 	const [userAnswer, setUserAnswer] = useState('');
 
-	useEffect(() => {
-		if (time === 0) {
-			setUserAnswer('');
-			// CLEAN UP THE INITIAL STATE TO AVOID BUG IN THE DIFFICULTIES AND TIME CHOICE
-			dispatch({
-				type: 'RESET_INITIAL_STATE'
-			});
-		}
-	}, [time]);
+	
+	const inputRef = useRef(null)
 
 	const randomNumberGenerator = number => {
 		return Math.round(Math.random() * number);
@@ -41,11 +34,18 @@ const Main = () => {
 			}, 1000);
 			setTimeout(() => {
 				clearInterval(timeInterval);
+				// ERASE ALL THE LETTERS LEFT IN THE INPUT
+				setUserAnswer('');
+				// CLEAN UP THE INITIAL STATE TO AVOID BUG IN THE DIFFICULTIES AND TIME CHOICE
+				dispatch({
+					type: 'RESET_INITIAL_STATE'
+				});
 			}, time * 1000);
 		}
 	};
 
 	const handleStart = () => {
+		// AFTER THE GAME, THE SCORE STAYS DISPLAYED TO ALLOW THE USER TO SEE HIS SCORE. WHEN A NEW A GAME START, THE SCORE IS RESETED
 		dispatch({
 			type: 'RESET_SCORE'
 		});
@@ -55,6 +55,10 @@ const Main = () => {
 		});
 		timerFunction();
 		setUserAnswer('');
+		// ENABLE MANUALY THE INPUT ELEMENT TO ALLOW THE FOCUS WHICH TAKES PLACE NEXT LINE
+		inputRef.current.disabled = false
+		// FOCUS ON THE INPUT ELEMENT WHEN THE BUTTON START IS PRESSED SO THE USER CAN TYPE RIGHT AWAY WHEN THE GAME BEGIN
+		inputRef.current.focus()
 	};
 
 	const handleUserAnswer = event => {
@@ -91,6 +95,7 @@ const Main = () => {
 						onKeyPress={handleUserAnswerValidation}
 						disabled={!started}
 						value={userAnswer}
+						ref={inputRef}
 					/>
 				</div>
 				{!started && (
