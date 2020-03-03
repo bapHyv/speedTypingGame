@@ -4,12 +4,12 @@ body {
 	background-color: black;
 	color: white;
 	text-shadow: 0 0 10px #21ebff;
-	margin: 0;
+	margin: 2em;
 	padding: 0;
 }
 
 * {
-    cursor: none;
+	cursor: none;
 }
 
 .currentScore {
@@ -40,7 +40,6 @@ select {
 	text-indent: 10px;
 }
 
-
 option {
 	color: white;
 	text-shadow: 0 0 10px #21ebff;
@@ -60,6 +59,20 @@ option {
 	display: inline-block;
 	font-size: 20px;
 	overflow: hidden;
+	animation: animateStartButton 1s linear infinite;
+}
+
+@keyframes animateStartButton {
+	0%,
+	100% {
+		color: white;
+		text-shadow: none;
+	}
+	30%,
+	70% {
+		color: white;
+		text-shadow: 0 0 10px #21ebff;
+	}
 }
 
 .startButton:hover {
@@ -68,6 +81,7 @@ option {
 	box-shadow: 0 0 25px #21ebff;
 	transition: 0.4s;
 	border-radius: 50%;
+	cursor: none;
 }
 
 .startButtonDisabled {
@@ -86,7 +100,11 @@ option {
 }
 
 .wordPlaceholder {
-	height: 24px;
+	height: 67px;
+}
+
+.word {
+	font-size: 2em;
 }
 
 h4 {
@@ -101,18 +119,6 @@ h4 {
 
 h5 {
 	font-size: 2em;
-}
-
-.description {
-	display: flex;
-	justify-content: left;
-	align-items: center;
-}
-
-.description p {
-	margin-top: 25px;
-	margin-left: 10px;
-	font-size: 20px;
 }
 
 .inputAnswer {

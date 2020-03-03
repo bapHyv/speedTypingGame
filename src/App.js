@@ -10,11 +10,11 @@ import { gameReducer, initialGameState } from './reducer/gameReducer';
 function App() {
 	const useGameState = useReducer(gameReducer, initialGameState);
 	return (
-		<div>
+		<>
 			<GameProvider value={useGameState}>
 				<HomePage />
 			</GameProvider>
-		</div>
+		</>
 	);
 }
 

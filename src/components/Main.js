@@ -115,12 +115,13 @@ const Main = () => {
 	};
 
 	return (
-		<div>
+		<>
 			<Title />
+			<Description />
 			<Options />
 			<h3>
 				{started ? (
-					<div>{wordsArray[randomNumber]}</div>
+					<div className="word">{wordsArray[randomNumber]}</div>
 				) : (
 					<div className="wordPlaceholder"></div>
 				)}
@@ -159,8 +160,7 @@ const Main = () => {
 			<div className="currentScore">
 				<span>Your current score: {currentScore}</span>
 			</div>
-			<Description />
-		</div>
+		</>
 	);
 };
 

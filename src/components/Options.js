@@ -6,11 +6,9 @@ import axios from 'axios';
 
 import { randomNumberGenerator } from '../externalFunctions/randomNumberGenerator';
 
-import '../css/option.css'
-
 const Options = () => {
 	const [state, dispatch] = useContext(gameContext);
-	const { wordsArray, selectDifficultyValue, selectTimerValue, time } = state;
+	const { wordsArray, selectDifficultyValue, selectTimerValue } = state;
 
 	const [timer, setTime] = useState(null);
 	const [difficultyLocalState, setDifficulty] = useState(null);
@@ -64,38 +62,34 @@ const Options = () => {
 	};
 
 	return (
-		<div className="choices">
-			<div className="options">
-				<h2>Difficulties:</h2>
-				<div >
-					<select
-						name="difficulty"
-						onChange={handleDifficultyLocalStateChange}
-						value={selectDifficultyValue}
-					>
-						<option value="">--Choose a difficulty--</option>
-						<option value="easy">Easy</option>
-						<option value="medium">Medium</option>
-						<option value="hard">Hard</option>
-					</select>
-				</div>
+		<div className="d-flex flex-lg-row flex-sm-column flex-xs-column justify-content-around mt-5 ">
+			<div className="d-flex justify-content-lg-center justify-content-sm-start col-xl-6 col-lg-6 col-md-6 col-sm-6 p-0">
+				<select
+					name="difficulty"
+					onChange={handleDifficultyLocalStateChange}
+					value={selectDifficultyValue}
+					className="m-0"
+				>
+					<option value="">--Choose a difficulty--</option>
+					<option value="easy">Easy</option>
+					<option value="medium">Medium</option>
+					<option value="hard">Hard</option>
+				</select>
 			</div>
-			<div className="options">
-				<h2>Time:</h2>
-				<div>
-					<select
-						name="time"
-						onChange={handleTimerChange}
-						value={selectTimerValue}
-					>
-						<option value="">--Choose a time--</option>
-						<option value="5">5 secondes</option>
-						<option value="15">15 secondes</option>
-						<option value="30">30 secondes</option>
-						<option value="45">45 secondes</option>
-						<option value="60">60 secondes</option>
-					</select>
-				</div>
+			<div className="d-flex justify-content-lg-center justify-content-sm-start col-xl-6 col-lg-6 col-md-6 col-sm-6 p-0">
+				<select
+					name="time"
+					onChange={handleTimerChange}
+					value={selectTimerValue}
+					className="m-0"
+				>
+					<option value="">--Choose a time--</option>
+					<option value="5">5 secondes</option>
+					<option value="15">15 secondes</option>
+					<option value="30">30 secondes</option>
+					<option value="45">45 secondes</option>
+					<option value="60">60 secondes</option>
+				</select>
 			</div>
 		</div>
 	);
