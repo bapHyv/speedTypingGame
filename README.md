@@ -1,10 +1,4 @@
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Speed Typing game
+## Speed Typing game
 
 I have made this project with [ReactJs](https://reactjs.org/) in order to practice the [hooks](https://reactjs.org/docs/hooks-intro.html) and [context](https://reactjs.org/docs/context.html) (useState, useEffect, useRef, useContext, useReducer).
 
