@@ -11,6 +11,7 @@ import { randomNumberGenerator } from '../externalFunctions/randomNumberGenerato
 
 import Right from '../SoundEffects/right.mp3';
 import Wrong from '../SoundEffects/wrong.mp3';
+import Victory from '../SoundEffects/victory.mp3'
 
 const rightAnswerAudioClip = {
 	sound: Right,
@@ -22,6 +23,11 @@ const wrongAnswerAudioClip = {
 	label: 'wrongAnswer'
 };
 
+const endGameAudioClip = {
+	sound: Victory,
+	label: 'victory'
+}
+
 const Main = () => {
 	const [state, dispatch] = useContext(gameContext);
 	const {
@@ -32,7 +38,8 @@ const Main = () => {
 		started,
 		currentScore,
 		selectTimerValue,
-		selectDifficultyValue
+		selectDifficultyValue,
+		soundMuted
 	} = state;
 
 	const [userAnswer, setUserAnswer] = useState('');
@@ -41,8 +48,9 @@ const Main = () => {
 	const inputRef = useRef(null);
 
 	useEffect(() => {
-		Howler.volume(1.0);
-	}, []);
+		Howler.volume(0.7);
+		Howler.mute(soundMuted)
+	}, [soundMuted]);
 
 	const soundPlay = src => {
 		const sound = new Howl({
@@ -69,6 +77,8 @@ const Main = () => {
 				});
 				// SET THE INPUT CSS TO inputAnswer SO WHEN THE USER RESTART A GAME IT WILL NOT APPEAR GREEN
 				setInputCss('inputAnswer');
+				// PLAY THE VICTORY FANFAR
+				soundPlay(Victory)
 			}, time * 1000);
 		}
 	};
@@ -114,6 +124,12 @@ const Main = () => {
 		}
 	};
 
+	const handleSwitchSound = () => {
+		dispatch({
+			type: 'SWITCH_SOUND'
+		})
+	}
+
 	return (
 		<>
 			<Title />
@@ -157,8 +173,9 @@ const Main = () => {
 				</button>
 			)}
 			{started && <h4 className="timeLeftPlaceholder">Time left: {time}</h4>}
-			<div className="currentScore">
+			<div className="d-flex justify-content-around">
 				<span>Your current score: {currentScore}</span>
+				<button className={soundMuted ? 'enableSoundButton':'disableSoundButton'} onClick={handleSwitchSound}>{soundMuted ? 'Enable sound' : 'Disable Sound'}</button>
 			</div>
 		</>
 	);

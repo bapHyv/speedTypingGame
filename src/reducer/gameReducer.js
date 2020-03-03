@@ -7,7 +7,8 @@ export const initialGameState = {
 	currentScore: 0,
 	started: false,
 	selectDifficultyValue: '',
-	selectTimerValue: ''
+	selectTimerValue: '',
+	soundMuted: false
 };
 
 export const gameReducer = (state, action) => {
@@ -89,6 +90,11 @@ export const gameReducer = (state, action) => {
 				...state,
 				time: state.time - action.payload
 			};
+		case 'SWITCH_SOUND':
+			return {
+				...state,
+				soundMuted: !state.soundMuted
+			}
 		default:
 			return state;
 	}

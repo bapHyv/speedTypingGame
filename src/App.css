@@ -10,10 +10,7 @@ body {
 
 * {
 	cursor: none;
-}
-
-.currentScore {
-	text-align: left;
+	overflow: hidden;
 }
 
 select:hover {
@@ -145,4 +142,46 @@ h5 {
 	border-radius: 50%;
 	background-color: black;
 	box-shadow: 0px 0px 20px #21ebff;
+}
+
+.disableSoundButton {
+	background-color: black;
+	border: none;
+	color: white;
+	text-shadow: 0 0 10px rgb(255, 31, 31);
+	border-radius: 50%;
+	text-transform: uppercase;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	overflow: hidden;
+}
+
+.disableSoundButton:hover {
+	background-color: rgb(255, 31, 31);
+	color: black;
+	transition: 0.4s;
+	border-radius: 50%;
+	cursor: none;
+}
+
+.enableSoundButton {
+	background-color: black;
+	border: none;
+	color: white;
+	text-shadow: 0 0 10px rgb(68, 255, 31);
+	border-radius: 50%;
+	text-transform: uppercase;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	overflow: hidden;
+}
+
+.enableSoundButton:hover {
+	background-color: rgb(68, 255, 31);
+	color: black;
+	transition: 0.4s;
+	border-radius: 50%;
+	cursor: none;
 }
